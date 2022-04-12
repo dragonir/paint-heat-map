@@ -2,10 +2,10 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Paint on Heat Distortion</title>
+  <title>Paint Heat Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta name="keywords" content="meta,facebook,Mark Elliot Zuckerberg">
+  <meta name="keywords" content="dragonir,heat map">
   <meta name="description" content="meta,facebook,Mark Elliot Zuckerberg">
   <meta name="apple-mobile-web-app-capable" content="yes"  />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,16 +18,17 @@
 </head>
 <body>
 <main>
-	<canvas data-img=""></canvas>
+	<canvas id="canvas" data-img=""></canvas>
 	<div class="mask">
 		<div class="mask-inner">
 		</div>
 	</div>
 </main>
-<a class="button">Clear</a>
-<span class="button">
-	<input type="file" id="upload">
-</span>
+<section class="button_container">
+  <button class="button">清除画布</button>
+  <button class="button"><input class="input" type="file" id="upload">上传图片</button>
+</section>
+
 <svg xlmns="http://www.w3.org/2000/svg" version="1.1">
   <filter id="heat" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%">
     <feTurbulence id="heatturb" type="fractalNoise" numOctaves="1" seed="2"></feTurbulence>
@@ -36,6 +37,6 @@
 </svg>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src='./assets/js/TweenMax.min.js'></script>
-<script  src="./assets/js/index.js"></script>
+<script src="./assets/js/index.js"></script>
 </body>
 </html>
