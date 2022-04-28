@@ -61,7 +61,8 @@ canvas {
           mask-size: 100% 100%;
   -webkit-backdrop-filter: hard-light;
           backdrop-filter: hard-light;
-  -webkit-mask-image: url('../images/mask.png')
+  -webkit-mask-image: url('../images/mask.png');
+  mask-image: url('../images/mask.png');
 }
 
 .mask-inner {
@@ -74,7 +75,8 @@ canvas {
   background-size: cover;
   background-position: 100% 50%;
   filter: url(#heat);
-  -webkit-mask-image: url('../images/mask.png')
+  -webkit-mask-image: url('../images/mask.png');
+  mask-image: url('../images/mask.png')
 }
 
 .button_container {
@@ -102,21 +104,21 @@ canvas {
   transition: all 0.1s ease-out;
   cursor: pointer;
   overflow: hidden;
-  box-shadow:     0 1px 0 hsl(174,5%,80%),
-                   0 2px 0 hsl(174,5%,75%),
-                   0 3px 0 hsl(174,5%,70%),
-                   0 4px 0 hsl(174,5%,66%),
-                   0 5px 0 hsl(174,5%,64%),
-                   0 6px 0 hsl(174,5%,62%),
-                   0 7px 0 hsl(174,5%,61%),
-                   0 8px 0 hsl(174,5%,60%),
-                   0 0 5px rgba(0,0,0,.05),
-                  0 1px 3px rgba(0,0,0,.2),
-                  0 3px 5px rgba(0,0,0,.2),
-                 0 5px 8px rgba(0,0,0,.2);
+  box-shadow: 0 1px 0 hsl(200,5%,80%),
+              0 2px 0 hsl(200,5%,75%),
+              0 3px 0 hsl(200,5%,70%),
+              0 4px 0 hsl(200,5%,66%),
+              0 5px 0 hsl(200,5%,64%),
+              0 6px 0 hsl(200,5%,62%),
+              0 7px 0 hsl(200,5%,61%),
+              0 8px 0 hsl(200,5%,60%),
+              0 0 5px rgba(0,0,0,.05),
+            0 1px 3px rgba(0,0,0,.2),
+            0 3px 5px rgba(0,0,0,.2),
+            0 5px 8px rgba(0,0,0,.2);
 }
 .button:hover {
-  background: #61cf07;
+  background: #48df69;
 }
 .button:first-child {
   margin-right: 24px;
