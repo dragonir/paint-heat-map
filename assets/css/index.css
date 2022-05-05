@@ -90,18 +90,18 @@ canvas {
   width: 200px;
   position: relative;
   -webkit-font-smoothing: antialiased;
-  background: #03c03c;
+  background: #a8ff78;
+  background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
+  background: linear-gradient(to right, #78ffd6, #a8ff78);
   border-radius: 12px;
   border: none;
   outline: none;
   -webkit-appearance: none;
-  color: rgba(255, 255, 255, 1);
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+  color: rgb(59, 90, 65);
   border-radius: 20px;
   text-align: center;
   font-size: 18px;
   text-decoration: none;
-  transition: all 0.1s ease-out;
   cursor: pointer;
   overflow: hidden;
   box-shadow: 0 1px 0 hsl(200,5%,80%),

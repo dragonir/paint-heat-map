@@ -1,11 +1,11 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var sketch = document.getElementById('sketch');
-var sketch_style = window.getComputedStyle(sketch);
-canvas.width = parseInt(sketch_style.getPropertyValue('width'));
-canvas.height = parseInt(sketch_style.getPropertyValue('height'));
-
+var sketchStyle = window.getComputedStyle(sketch);
 var mouse = { x: 0, y: 0 };
+
+canvas.width = parseInt(sketchStyle.getPropertyValue('width'));
+canvas.height = parseInt(sketchStyle.getPropertyValue('height'));
 
 canvas.addEventListener('mousemove', e => {
   mouse.x = e.pageX - canvas.getBoundingClientRect().left;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #a8ff78;
+      background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
+      background: linear-gradient(to right, #78ffd6, #a8ff78);
+    }
+    .el {
+      width: 100vw;
+      height: 100vh;
+      padding: 1rem;
+      background-image: url('../assets/images/bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      -webkit-mask-image: url('../assets/images/sun.svg');
+      -webkit-mask-size: 100vmin;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-image: url('../assets/images/sun.svg');
+      mask-size: 100vmin;
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="el"></div>
+</body>
+</html>
