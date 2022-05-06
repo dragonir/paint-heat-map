@@ -6,109 +6,41 @@
 
 ## 效果
 
-在线预览：<https://dragonir.github.io/paint-heat-map/>
+> `👀` 在线预览：<https://dragonir.github.io/paint-heat-map/>
 
 ## 原理
 
-```
-mask-image
-Experimental: 这是一个实验中的功能
-此功能某些浏览器尚在开发中，请参考浏览器兼容性表格以得到在不同浏览器中适合使用的前缀。由于该功能对应的标准文档可能被重新修订，所以在未来版本的浏览器中该功能的语法和行为可能随之改变。
+### mask-image
 
-概要
-mask-image CSS属性用于设置元素上遮罩层的图像。
+`mask-image` `CSS` 属性用于设置元素上遮罩层的图像。
 
-初始值	none
-适用元素	all elements; In SVG, it applies to container elements excluding the defs element and all graphics elements
-是否是继承属性	否
-计算值	as specified, but with url values made absolute
-Animation type	discrete
-语法
-/* Keyword value */
+* 初始值：`none`
+* 适用元素：所有元素，在 `SVG` 中它生效于除了 `defs` 元素和所有图形元素以外的所有容器元素
+* 是否是继承属性：否
+* 计算值：按照指定，但 `url` 值设为绝对值
+* 动画类型：离散型
+
+#### 语法
+
+```css
+/* 默认值，透明的黑色图像层，也就是没有遮罩层。 */
 mask-image: none;
-
-/* <mask-source> value */
+/* <mask-source><mask>或CSS图像的url的值 */
 mask-image: url(masks.svg#mask1);
-
-/* <image< values */
+/* <image> 图片作为遮罩层 */
 mask-image: linear-gradient(rgba(0, 0, 0, 1.0), transparent);
 mask-image: image(url(mask.png), skyblue);
-
-/* Multiple values */
+/* 多个值 */
 mask-image: image(url(mask.png), skyblue), linear-gradient(rgba(0, 0, 0, 1.0), transparent);
-
-/* Global values */
+/* 全局值 */
 mask-image: inherit;
 mask-image: initial;
 mask-image: unset;
-Copy to Clipboard
-Values
-none
-默认值，透明的黑色图像层，也就是没有遮罩层。
-<mask-source>
-<mask>或CSS图像的url
-<image>
-图片作为遮罩层
-Formal syntax
-<mask-reference>#
-where 
-<mask-reference> = none | <image> | <mask-source>
+```
 
-where 
-<image> = <url> | <image()> | <image-set()> | <element()> | <paint()> | <cross-fade()> | <gradient>
-<mask-source> = <url>
+#### 例子
 
-where 
-<image()> = image( <image-tags>? [ <image-src>? , <color>? ]! )
-<image-set()> = image-set( <image-set-option># )
-<element()> = element( <id-selector> )
-<paint()> = paint( <ident> (en-US), <declaration-value>? )
-<cross-fade()> = cross-fade( <cf-mixing-image> , <cf-final-image>? )
-<gradient> = <linear-gradient()> | <repeating-linear-gradient()> | <radial-gradient()> | <repeating-radial-gradient()> | <conic-gradient()>
-
-where 
-<image-tags> = ltr | rtl
-<image-src> = <url> | <string>
-<color> = <rgb()> | <rgba()> | <hsl()> | <hsla()> | <hwb()> | <hex-color> | <named-color> | currentcolor | <deprecated-system-color>
-<image-set-option> = [ <image> | <string> ] [ <resolution> || type(<string>) ]
-<id-selector> = <hash-token>
-<cf-mixing-image> = <percentage>? && <image>
-<cf-final-image> = <image> | <color>
-<linear-gradient()> = linear-gradient( [ <angle> | to <side-or-corner> ]? , <color-stop-list> )
-<repeating-linear-gradient()> = repeating-linear-gradient( [ <angle> | to <side-or-corner> ]? , <color-stop-list> )
-<radial-gradient()> = radial-gradient( [ <ending-shape> || <size> ]? [ at <position> ]? , <color-stop-list> )
-<repeating-radial-gradient()> = repeating-radial-gradient( [ <ending-shape> || <size> ]? [ at <position> ]? , <color-stop-list> )
-<conic-gradient()> = conic-gradient( [ from <angle> ]? [ at <position> ]?, <angular-color-stop-list> )
-
-where 
-<rgb()> = rgb( <percentage>{3} [ / <alpha-value> ]? ) | rgb( <number>{3} [ / <alpha-value> ]? ) | rgb( <percentage>#{3} , <alpha-value>? ) | rgb( <number>#{3} , <alpha-value>? )
-<rgba()> = rgba( <percentage>{3} [ / <alpha-value> ]? ) | rgba( <number>{3} [ / <alpha-value> ]? ) | rgba( <percentage>#{3} , <alpha-value>? ) | rgba( <number>#{3} , <alpha-value>? )
-<hsl()> = hsl( <hue> <percentage> <percentage> [ / <alpha-value> ]? ) | hsl( <hue>, <percentage>, <percentage>, <alpha-value>? )
-<hsla()> = hsla( <hue> <percentage> <percentage> [ / <alpha-value> ]? ) | hsla( <hue>, <percentage>, <percentage>, <alpha-value>? )
-<hwb()> = hwb( [<hue> | none] [<percentage> | none] [<percentage> | none] [ / [<alpha-value> | none] ]? )
-<side-or-corner> = [ left | right ] || [ top | bottom ]
-<color-stop-list> = [ <linear-color-stop> [, <linear-color-hint>]? ]# , <linear-color-stop>
-<ending-shape> = circle | ellipse
-<size> = closest-side | farthest-side | closest-corner | farthest-corner | <length> | <length-percentage>{2}
-<position> = [ [ left | center | right ] || [ top | center | bottom ] | [ left | center | right | <length-percentage> ] [ top | center | bottom | <length-percentage> ]? | [ [ left | right ] <length-percentage> ] && [ [ top | bottom ] <length-percentage> ] ]
-<angular-color-stop-list> = [ <angular-color-stop> [, <angular-color-hint>]? ]# , <angular-color-stop>
-
-where 
-<alpha-value> = <number> | <percentage>
-<hue> = <number> | <angle>
-<linear-color-stop> = <color> <color-stop-length>?
-<linear-color-hint> = <length-percentage>
-<length-percentage> = <length> | <percentage>
-<angular-color-stop> = <color> && <color-stop-angle>?
-<angular-color-hint> = <angle-percentage>
-
-where 
-<color-stop-length> = <length-percentage>{1,2}
-<color-stop-angle> = <angle-percentage>{1,2}
-<angle-percentage> = <angle> | <percentage>
-
-例子
-CSS
+```css
 #masked {
   width: 100px;
   height: 100px;
@@ -116,10 +48,13 @@ CSS
   mask-image: url(https://mdn.mozillademos.org/files/12676/star.svg);
   -webkit-mask-image: url(https://mdn.mozillademos.org/files/12676/star.svg);
 }
-Copy to Clipboard
-HTML
+```
+
+```html
 <div id="masked"></div>
 ```
+
+> `⚡` 此功能某些浏览器尚在开发中，需要使用浏览器前缀以兼容不同浏览器。
 
 ## 实现
 
@@ -129,8 +64,8 @@ HTML
 
 ```html
 <main id="sketch">
-	<canvas id="canvas" data-img=""></canvas>
-	<div class="mask">
+  <canvas id="canvas" data-img=""></canvas>
+  <div class="mask">
     <div id="maskInner" class="mask-inner"></div>
   </div>
 </main>
@@ -252,31 +187,6 @@ document.getElementById('upload').onchange = function () {
 ### 样式
 
 ```css
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-body, html {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #232526;
-  background: -webkit-linear-gradient(to right, #414345, #232526);
-  background: linear-gradient(to right, #414345, #232526);
-}
-
 main {
   cursor: -webkit-grab;
   cursor: grab;
@@ -292,7 +202,6 @@ main {
   box-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
   border: 1px groove rgba(255, 255, 255, .2);
 }
-
 canvas {
   opacity: 0;
   position: absolute;
@@ -301,7 +210,6 @@ canvas {
   width: 100%;
   height: 100%;
 }
-
 .mask {
   display: none;
   position: absolute;
@@ -318,7 +226,6 @@ canvas {
   -webkit-mask-image: url('../images/mask.png');
   mask-image: url('../images/mask.png');
 }
-
 .mask-inner {
   position: absolute;
   top: 0;
@@ -332,121 +239,46 @@ canvas {
   -webkit-mask-image: url('../images/mask.png');
   mask-image: url('../images/mask.png')
 }
-
-.button_container {
-  margin: 40px auto;
-  position: fixed;
-  bottom: 0;
-}
-
-.button {
-  height: 40px;
-  width: 200px;
-  position: relative;
-  -webkit-font-smoothing: antialiased;
-  background: #a8ff78;
-  background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
-  background: linear-gradient(to right, #78ffd6, #a8ff78);
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-  color: rgb(59, 90, 65);
-  border-radius: 20px;
-  text-align: center;
-  font-size: 18px;
-  text-decoration: none;
-  cursor: pointer;
-  overflow: hidden;
-  box-shadow: 0 1px 0 hsl(200,5%,80%),
-              0 2px 0 hsl(200,5%,75%),
-              0 3px 0 hsl(200,5%,70%),
-              0 4px 0 hsl(200,5%,66%),
-              0 5px 0 hsl(200,5%,64%),
-              0 6px 0 hsl(200,5%,62%),
-              0 7px 0 hsl(200,5%,61%),
-              0 8px 0 hsl(200,5%,60%),
-              0 0 5px rgba(0,0,0,.05),
-            0 1px 3px rgba(0,0,0,.2),
-            0 3px 5px rgba(0,0,0,.2),
-            0 5px 8px rgba(0,0,0,.2);
-}
-.button:hover {
-  background: #48df69;
-}
-.button:first-child {
-  margin-right: 24px;
-}
-.button .input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  -webkit-appearance: none;
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  background: transparent;
-  opacity: 0;
-  cursor: pointer;
-}
 ```
 
 ## 更多示例
 
-A mask in CSS hides part of the element is applied to.
+### example 0
 
-.element {
-  mask-image: url(star.svg);
-}
 Say you had an element with a photographic background, and a black-and-white SVG graphic to use as a mask, like this:
 
 ![image_0](https://i0.wp.com/css-tricks.com/wp-content/uploads/2020/03/image-and-mask.png?resize=1000%2C857&ssl=1)
 
 You could set the image as a background-image and the mask as a mask-image on the same element, and get something like this:
 
-#### example 0
-
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      background: #a8ff78;
-      background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
-      background: linear-gradient(to right, #78ffd6, #a8ff78);
-    }
-    .el {
-      width: 100vw;
-      height: 100vh;
-      padding: 1rem;
-      background-image: url('../assets/images/bg.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      -webkit-mask-image: url('../assets/images/sun.svg');
-      -webkit-mask-size: 100vmin;
-      -webkit-mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-image: url('../assets/images/sun.svg');
-      mask-size: 100vmin;
-      mask-repeat: no-repeat;
-      mask-position: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="el"></div>
-</body>
-</html>
+<div class="el"></div>
+```
+
+```css
+body {
+  margin: 0;
+  background: #a8ff78;
+  background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
+  background: linear-gradient(to right, #78ffd6, #a8ff78);
+}
+.el {
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem;
+  background-image: url('../assets/images/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: url('../assets/images/sun.svg');
+  -webkit-mask-size: 100vmin;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url('../assets/images/sun.svg');
+  mask-size: 100vmin;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
 ```
 
 ![example_0](./assets/images/example_0.png)
@@ -459,55 +291,40 @@ But alpha masks seem to work just fine. As in raster graphics that use actual al
 
 #### example 1
 
-![sf](https://i0.wp.com/css-tricks.com/wp-content/uploads/2020/03/alpha-graphic.png?resize=1000%2C709&ssl=1)
+![dragonir](./assets/images/dragonir.png)
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    * {
-  box-sizing: border-box;
-}
+<div class="el"></div>
+```
+
+```css
 body {
   margin: 0;
-  background: linear-gradient(to right, red, blue);
+  background: #f08c0a;
+  background: -webkit-linear-gradient(to right, #03c03c, #f08c0a);
+  background: linear-gradient(to right, #03c03c, #f08c0a);
   background-position-x: 0;
-  animation: size 3s infinite linear;
+  animation: size 2s infinite ease-in-out;
 }
 @keyframes size {
   to {
     background-position-x: 100vw;
   }
 }
-
 .el {
   width: 100vw;
   height: 100vh;
-  padding: 1rem;
-
-  background-image: url(https://images.unsplash.com/photo-1528287942171-fbe365d1d9ac?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&w=1200&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ);
+  background-image: url('../assets/images/bg.jpg');
   background-size: cover;
   background-position: center;
-
-  -webkit-mask-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/chris-mask.png);
-  -webkit-mask-size: contain;
-  mask-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/chris-mask.png);
-  mask-size: contain;
+  -webkit-mask-image: url('../assets/images/dragonir.png');
+  -webkit-mask-size: cover;
+  mask-image: url('../assets/images/dragonir.png');
+  mask-size: cover;
 }
-  </style>
-</head>
-<body>
-  <div class="el"></div>
-</body>
-</html>
 ```
 
-![example_0](./assets/images/example_1.png)
+![example_0](./assets/images/example_1.gif)
 
 #### example 2
 
@@ -554,6 +371,7 @@ Here are two more examples of interesting effects that can be accomplished with 
 ![example_0](./assets/images/example_4.png)
 
 And the CSS rules for these 2 gradient masks:
+
 ```css
 .mask2 {
   -webkit-mask-image: radial-gradient(circle at 50% 60%, black 50%, rgba(0, 0, 0, 0.6) 50%);
@@ -564,12 +382,15 @@ And the CSS rules for these 2 gradient masks:
   mask-image: radial-gradient(ellipse 90% 80% at 48% 78%, black 40%, transparent 50%);
 }
 ```
+
 ##### Masking Using Images
+
 Here’s we’re using an image that was created using Sketch as our image mask. The first image is the image mask itself, and the second image has that mask applied to it:
 
 ![example_0](./assets/images/example_5.png)
 
 And our CSS looks like this:
+
 ```css
 .mask4 {
   -webkit-mask-image: url("/path/to/image-mask.png");
@@ -578,9 +399,11 @@ And our CSS looks like this:
   mask-size: 400px 600px;
 }
 ```
+
 We specified a value for mask-size here because our image mask is 800px by 1200px, but here we want everything shrunk by half so that the image can look sharp on retina displays.
 
 ##### Masking Using SVG Masks
+
 Finally, if SVG is your groove, you can define image masks using the SVG mask element.
 
 The first example currently only seems to be working in Firefox (you probably won’t see anything in non-supporting browsers). It defines the SVG mask and then we reference the ID of the mask in CSS as usual. The second example seems to have wider support and defines the image as part of the SVG element itself.
@@ -634,6 +457,6 @@ For our second SVG example, everything is contained in the SVG definition, inclu
 
 ## 参考资料
 
-https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-image
-https://css-tricks.com/almanac/properties/m/mask-image/
-https://www.digitalocean.com/community/tutorials/css-masking-with-mask-image
+* [1]. <https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-image>
+* [2]. <https://css-tricks.com/almanac/properties/m/mask-image/>
+* [3]. <https://www.digitalocean.com/community/tutorials/css-masking-with-mask-image>

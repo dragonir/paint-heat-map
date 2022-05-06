@@ -4,37 +4,35 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>example_1</title>
   <style>
     * {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  background: linear-gradient(to right, red, blue);
-  background-position-x: 0;
-  animation: size 3s infinite linear;
-}
-@keyframes size {
-  to {
-    background-position-x: 100vw;
-  }
-}
-
-.el {
-  width: 100vw;
-  height: 100vh;
-  padding: 1rem;
-
-  background-image: url(https://images.unsplash.com/photo-1528287942171-fbe365d1d9ac?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&w=1200&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ);
-  background-size: cover;
-  background-position: center;
-
-  -webkit-mask-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/chris-mask.png);
-  -webkit-mask-size: contain;
-  mask-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/chris-mask.png);
-  mask-size: contain;
-}
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f08c0a;
+      background: -webkit-linear-gradient(to right, #03c03c, #f08c0a);
+      background: linear-gradient(to right, #03c03c, #f08c0a);
+      background-position-x: 0;
+      animation: size 2s infinite ease-in-out;
+    }
+    @keyframes size {
+      to {
+        background-position-x: 100vw;
+      }
+    }
+    .el {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('../assets/images/bg.jpg');
+      background-size: cover;
+      background-position: center;
+      -webkit-mask-image: url('../assets/images/dragonir.png');
+      -webkit-mask-size: cover;
+      mask-image: url('../assets/images/dragonir.png');
+      mask-size: cover;
+    }
   </style>
 </head>
 <body>
