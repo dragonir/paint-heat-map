@@ -1,12 +1,30 @@
-# 使用mask-image实现游戏卡片波动效果
+# 使用 mask-image 给静态图片添加动态效果
 
 ![banner.gif](./assets/images/banner.gif)
 
+> 声明：本文涉及图文和模型素材仅用于个人学习、研究和欣赏，请勿二次修改、非法传播、转载、出版、商用、及进行其他获利行为。
+
 ## 背景
+
+如Banner图貂蝉皮肤所示，如果你有玩过《王者荣耀》、《阴阳师》等手游，一定有注意到过，它的启动动画、皮肤卡片立绘等，经常看起来是一张静态的图片，但是局部有液态流动动画效果，如流动的水流、飘动的雾气、风、衣物等。本文使用前端开发技术，来实现类似的液化流动效果。
 
 ## 效果
 
-> `👀` 在线预览：<https://dragonir.github.io/paint-heat-map/>
+下面几张图是使用本文内容生成的流动效果，gif图压缩比较严重效果不太好，大家可以打开示例链接，亲自上传图片体验效果。（ps：体验页面部署在Gitpage文中上传图片功能不是真正上传到服务器，而是只会加载到浏览器本地，页面不会获取任何信息，大家可以放心体验，不用担心隐私泄漏问题）
+
+湖面波动
+
+![sample_0](./assets/images/sample_0.gif)
+
+文字液化
+
+![sample_1](./assets/images/sample_1.gif)
+
+岩浆沸腾
+
+![sample_2](./assets/images/sample_2.gif)
+
+> `🎮` 在线体验：<https://dragonir.github.io/paint-heat-map/>
 
 ## 原理
 
@@ -38,6 +56,8 @@ mask-image: initial;
 mask-image: unset;
 ```
 
+![caniuse](./assets/images/caniuse.png)
+
 #### 例子
 
 ```css
@@ -58,9 +78,17 @@ mask-image: unset;
 
 ## 实现
 
-绘制热力图
+页面主要由两部分构成，顶部用于加载图片，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击 `清除画布` 按钮，可以清除绘制的流动动画效果、点击 `切换图片` 可以加载本地的图片。`⚠⚠⚠` 注意，还有一个隐形的功能，当你绘制完成时，可以点击🖱鼠标右键，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的CSS知识，就能把静态图片转化成动态图啦！
+
+![step_0](./assets/images/step_0.png)
 
 ### 页面
+
+feTurbulence
+该滤镜利用 Perlin 噪声函数创建了一个图像。它实现了人造纹理比如说云纹、大理石纹的合成。
+
+feDisplacementMap
+映射置换滤镜，该滤镜用来自图像中从in2 (en-US)到空间的像素值置换图像从in到空间的像素值。
 
 ```html
 <main id="sketch">
@@ -460,3 +488,4 @@ For our second SVG example, everything is contained in the SVG definition, inclu
 * [1]. <https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-image>
 * [2]. <https://css-tricks.com/almanac/properties/m/mask-image/>
 * [3]. <https://www.digitalocean.com/community/tutorials/css-masking-with-mask-image>
+https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/feDisplacementMap

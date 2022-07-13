@@ -18,9 +18,36 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #232526;
-  background: -webkit-linear-gradient(to right, #414345, #232526);
-  background: linear-gradient(to right, #414345, #232526);
+  background: #121212;
+  background: -webkit-linear-gradient(to bottom, #434343, #121212);
+  background: linear-gradient(to bottom, #434343, #121212);
+}
+.bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200vh;
+  background: transparent url('../images/noise.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: bg-animation .2s infinite;
+  opacity: .9;
+  visibility: visible;
+}
+@keyframes bg-animation {
+  0% { transform: translate(0,0) }
+  10% { transform: translate(-5%,-5%) }
+  20% { transform: translate(-10%,5%) }
+  30% { transform: translate(5%,-10%) }
+  40% { transform: translate(-5%,15%) }
+  50% { transform: translate(-10%,5%) }
+  60% { transform: translate(15%,0) }
+  70% { transform: translate(0,10%) }
+  80% { transform: translate(-15%,0) }
+  90% { transform: translate(10%,5%) }
+  100% { transform: translate(5%,0) }
 }
 
 main {
@@ -37,6 +64,7 @@ main {
   overflow: hidden;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
   border: 1px groove rgba(255, 255, 255, .2);
+  top: -50px;
 }
 
 canvas {
@@ -90,20 +118,20 @@ canvas {
   width: 200px;
   position: relative;
   -webkit-font-smoothing: antialiased;
-  background: #a8ff78;
-  background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
-  background: linear-gradient(to right, #78ffd6, #a8ff78);
+  background: #FFFFFF;
   border-radius: 12px;
   border: none;
   outline: none;
   -webkit-appearance: none;
-  color: rgb(59, 90, 65);
-  border-radius: 20px;
+  color: #000000;
+  border-radius: 8px;
   text-align: center;
   font-size: 18px;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
+  margin-bottom: 12px;
   box-shadow: 0 1px 0 hsl(200,5%,80%),
               0 2px 0 hsl(200,5%,75%),
               0 3px 0 hsl(200,5%,70%),
@@ -118,7 +146,7 @@ canvas {
             0 5px 8px rgba(0,0,0,.2);
 }
 .button:hover {
-  background: #48df69;
+  background: #EFEFEF;
 }
 .button:first-child {
   margin-right: 24px;
