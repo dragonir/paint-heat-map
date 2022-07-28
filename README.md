@@ -1,4 +1,4 @@
-# 使用 mask-image 给静态图片添加动态效果
+# 使用 mask-image 让静态图片动起来 💢
 
 ![banner.gif](./assets/images/banner.gif)
 
@@ -6,25 +6,27 @@
 
 ## 背景
 
-如Banner图貂蝉皮肤所示，如果你有玩过《王者荣耀》、《阴阳师》等手游，一定有注意到过，它的启动动画、皮肤卡片立绘等，经常看起来是一张静态的图片，但是局部有液态流动动画效果，如流动的水流、飘动的雾气、风、衣物等。本文使用前端开发技术，来实现类似的液化流动效果。
+如 `👆` `Banner` 图貂蝉 `猫影幻舞` 皮肤所示，如果你有玩过 `《王者荣耀》` 、 `《阴阳师》` 等手游，一定有注意到过，它的启动动画、皮肤卡片立绘等，经常看起来是一张静态的图片，但是局部有**液态流动动画**效果，如流动的水流、飘动的雾气、风、衣物等。本文使用前端开发技术，来实现类似的液化流动效果。
 
 ## 效果
 
-下面几张图是使用本文内容生成的流动效果，gif图压缩比较严重效果不太好，大家可以打开示例链接，亲自上传图片体验效果。（ps：体验页面部署在Gitpage文中上传图片功能不是真正上传到服务器，而是只会加载到浏览器本地，页面不会获取任何信息，大家可以放心体验，不用担心隐私泄漏问题）
+> `🎮` 在线体验：<https://dragonir.github.io/paint-heat-map/>
 
-湖面波动
+下面几张图是使用本文内容生成的流动效果，gif图压缩比较严重效果不太好，大家可以打开示例链接，亲自上传图片体验效果。
+
+🌅 湖面波动
 
 ![sample_0](./assets/images/sample_0.gif)
 
-文字液化
+🎨 文字液化
 
 ![sample_1](./assets/images/sample_1.gif)
 
-岩浆沸腾
+🔥 岩浆沸腾
 
 ![sample_2](./assets/images/sample_2.gif)
 
-> `🎮` 在线体验：<https://dragonir.github.io/paint-heat-map/>
+> `📌` ps：体验页面部署在Gitpage文中上传图片功能不是真正上传到服务器，而是只会加载到浏览器本地，页面不会获取任何信息，大家可以放心体验，不用担心隐私泄漏问题。
 
 ## 原理
 
@@ -78,7 +80,7 @@ mask-image: unset;
 
 ## 实现
 
-页面主要由两部分构成，顶部用于加载图片，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击 `清除画布` 按钮，可以清除绘制的流动动画效果、点击 `切换图片` 可以加载本地的图片。`⚠⚠⚠` 注意，还有一个隐形的功能，当你绘制完成时，可以点击🖱鼠标右键，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的CSS知识，就能把静态图片转化成动态图啦！
+页面主要由两部分构成，顶部用于加载图片，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击按钮 `🔘` **清除画布**，可以清除绘制的流动动画效果、点击按钮 `🔘` **切换图片**可以加载本地的图片。`⚠` 注意，还有一个隐形的功能，当你绘制完成时，可以点击 `🖱` 鼠标右键，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的 `CSS` 知识，就能把静态图片转化成动态图啦！
 
 ![step_0](./assets/images/step_0.png)
 
@@ -88,7 +90,7 @@ feTurbulence
 该滤镜利用 Perlin 噪声函数创建了一个图像。它实现了人造纹理比如说云纹、大理石纹的合成。
 
 feDisplacementMap
-映射置换滤镜，该滤镜用来自图像中从in2 (en-US)到空间的像素值置换图像从in到空间的像素值。
+映射置换滤镜，该滤镜用来自图像中从in2到空间的像素值置换图像从in到空间的像素值。
 
 ```html
 <main id="sketch">
@@ -212,6 +214,8 @@ document.getElementById('upload').onchange = function () {
 };
 ```
 
+通过修改svg的属性，实现动画效果
+
 ### 样式
 
 ```css
@@ -269,223 +273,25 @@ canvas {
 }
 ```
 
-## 更多示例
+在页面右键保存生成的热点图
 
-### example 0
+![mask](./assets/images/mask.png)
 
-Say you had an element with a photographic background, and a black-and-white SVG graphic to use as a mask, like this:
+![banner.gif](./assets/images/banner.gif)
 
-![image_0](https://i0.wp.com/css-tricks.com/wp-content/uploads/2020/03/image-and-mask.png?resize=1000%2C857&ssl=1)
+## 附录
 
-You could set the image as a background-image and the mask as a mask-image on the same element, and get something like this:
+* [我的3D专栏可以点击此链接访问 👈](https://juejin.cn/column/7049923956257587213)
+* [1]. [🦊 Three.js 实现3D开放世界小游戏：阿狸的多元宇宙](https://juejin.cn/post/7081429595689320478)
+* [2]. [🔥 Three.js 火焰效果实现艾尔登法环动态logo](https://juejin.cn/post/7077726955528781832)
+* [3]. [🐼 Three.js 实现2022冬奥主题3D趣味页面，含冰墩墩](https://juejin.cn/post/7060292943608807460)
+* `...`
 
-```html
-<div class="el"></div>
-```
+* [1]. [📷 前端实现很哇塞的浏览器端扫码功能](https://juejin.cn/post/7018722520345870350)
+* [2]. [🌏 前端瓦片地图加载之塞尔达传说旷野之息](https://juejin.cn/post/7007432493569671182)
+* [3]. [😱 仅用CSS几步实现赛博朋克2077风格视觉效果](https://juejin.cn/post/6972759988632551460)
+* `...`
 
-```css
-body {
-  margin: 0;
-  background: #a8ff78;
-  background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);
-  background: linear-gradient(to right, #78ffd6, #a8ff78);
-}
-.el {
-  width: 100vw;
-  height: 100vh;
-  padding: 1rem;
-  background-image: url('../assets/images/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  -webkit-mask-image: url('../assets/images/sun.svg');
-  -webkit-mask-size: 100vmin;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-image: url('../assets/images/sun.svg');
-  mask-size: 100vmin;
-  mask-repeat: no-repeat;
-  mask-position: center;
-}
-```
+## 参考
 
-![example_0](./assets/images/example_0.png)
-
-That works because the top of the linear-gradient is transparent. I would have assumed it would work if it was white as well as long as the mask-type was luminance, but that doesn’t seem to work in any browser for me.
-
-Speaking of luminance masks, that doesn’t seem to work for images-as-masks that are a raster format like JPG or PNG for me. Update: Reader Micheal Hall writes in with a demo where it might have something to do with using the long-hand properties. Firefox seems to support this concept if you only use the shorthand.
-
-But alpha masks seem to work just fine. As in raster graphics that use actual alpha transparency. Like this:
-
-#### example 1
-
-![dragonir](./assets/images/dragonir.png)
-
-```html
-<div class="el"></div>
-```
-
-```css
-body {
-  margin: 0;
-  background: #f08c0a;
-  background: -webkit-linear-gradient(to right, #03c03c, #f08c0a);
-  background: linear-gradient(to right, #03c03c, #f08c0a);
-  background-position-x: 0;
-  animation: size 2s infinite ease-in-out;
-}
-@keyframes size {
-  to {
-    background-position-x: 100vw;
-  }
-}
-.el {
-  width: 100vw;
-  height: 100vh;
-  background-image: url('../assets/images/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  -webkit-mask-image: url('../assets/images/dragonir.png');
-  -webkit-mask-size: cover;
-  mask-image: url('../assets/images/dragonir.png');
-  mask-size: cover;
-}
-```
-
-![example_0](./assets/images/example_1.gif)
-
-#### example 2
-
-The mask-image property can also be used directly inside SVG elements. Like check out this elliptical mask that also has a blurred filter:
-
-```html
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="170" height="200">
-  <defs>
-    <filter id="filter">
-      <feGaussianBlur stdDeviation="5" />
-    </filter>
-    <mask id="mask">
-      <ellipse cx="50%" cy="50%" rx="25%" ry="25%" fill="white" filter="url(#filter)"></ellipse>
-    </mask>
-  </defs>
-  <image xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/Harry-Potter-1-.jpg" width="170" height="200" mask="url(#mask)"></image>
-</svg>
-```
-
-It kinda looks like you could snag that SVG mask and apply it to other elements with mask-image: url(#mask); but I don’t find that actually works. It only works within SVG, and has a nasty side effect of entirely erasing an image if used outside the SVG.
-
-![example_0](./assets/images/example_2.png)
-
-We covered the use of the clip-path property for clipping using CSS, so it’s only natural that we now go over masking. Contrary to clipping, where a part of an image or element is either completely invisible or completely visible, with masking we can hide or show parts of an image with different levels of opacity.
-
-Masking in CSS is done using the mask-image property, and an image has to be provided as the mask. Anything that’s 100% black in the image mask with be completely visible, anything that’s 100% transparent will be completely hidden, and anything in-between will partially mask the image. Linear and radial gradients in CSS are generated images, so they can be used as the image mask. SVGs that use the mask element can also be used as the image mask. Let’s go over the 3 possibilities for image masks with concrete examples:
-
-Masking Using Gradients
-Let’s first use a simple linear gradient that goes from transparent to black. The first image is our default starting image, and the second image has our linear gradient applied as the mask-image value:
-
-![example_0](./assets/images/example_3.png)
-
-Here’s the CSS rules used here:
-
-```css
-.mask1 {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
-  mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
-}
-```
-
-Here are two more examples of interesting effects that can be accomplished with masking using gradients:
-
-![example_0](./assets/images/example_4.png)
-
-And the CSS rules for these 2 gradient masks:
-
-```css
-.mask2 {
-  -webkit-mask-image: radial-gradient(circle at 50% 60%, black 50%, rgba(0, 0, 0, 0.6) 50%);
-  mask-image: radial-gradient(circle at 50% 60%, black 50%, rgba(0, 0, 0, 0.6) 50%);
-}
-.mask3 {
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 48% 78%, black 40%, transparent 50%);
-  mask-image: radial-gradient(ellipse 90% 80% at 48% 78%, black 40%, transparent 50%);
-}
-```
-
-##### Masking Using Images
-
-Here’s we’re using an image that was created using Sketch as our image mask. The first image is the image mask itself, and the second image has that mask applied to it:
-
-![example_0](./assets/images/example_5.png)
-
-And our CSS looks like this:
-
-```css
-.mask4 {
-  -webkit-mask-image: url("/path/to/image-mask.png");
-  mask-image: url("/path/to/image-mask.png");
-  -webkit-mask-size: 400px 600px;
-  mask-size: 400px 600px;
-}
-```
-
-We specified a value for mask-size here because our image mask is 800px by 1200px, but here we want everything shrunk by half so that the image can look sharp on retina displays.
-
-##### Masking Using SVG Masks
-
-Finally, if SVG is your groove, you can define image masks using the SVG mask element.
-
-The first example currently only seems to be working in Firefox (you probably won’t see anything in non-supporting browsers). It defines the SVG mask and then we reference the ID of the mask in CSS as usual. The second example seems to have wider support and defines the image as part of the SVG element itself.
-
-> Also note that with SVG masks, the colors to use are white and black instead of transparent and black. The colors also work in reverse and white/partially white is what will be visible.
-
-![example_0](./assets/images/example_6.png)
-
-Example 1 (triangle)
-Here’s the SVG markup for the first example:
-
-```html
-<svg width="0" height="0" viewBox="0 0 400 600">
-  <defs>
-    <mask id="my-svg-mask">
-      <rect fill="#000000" x="0" y="0" width="400" height="600"></rect>
-      <polygon fill="#FFFFFF" points="200.5 152 349 449 52 449"></polygon>
-    </mask>
-  </defs>
-</svg>
-```
-
-Then we can apply the mask to our image with mask-image as usual by refecencing the ID of the SVG mask:
-
-```css
-.mask5 {
-  -webkit-mask-image: url(#my-svg-mask);
-  mask-image: url(#my-svg-mask);
-}
-```
-
-Example 2 (bubbles)
-For our second SVG example, everything is contained in the SVG definition, including our main image itself:
-
-```html
-<svg width="400px" height="600px" viewBox="0 0 400 600">
-  <defs>
-    <mask id="my-svg-mask2">
-      <rect id="Rectangle" fill="#000000" x="0" y="0" width="400" height="600"></rect>
-      <circle id="Oval" fill="#FFFFFF" cx="67.5" cy="51.5" r="67.5"></circle>
-      <circle id="Oval" fill="#FFFFFF" cx="296.597656" cy="118.597656" r="56.5976562"></circle>
-      <circle id="Oval" fill="#FFFFFF" cx="53.4648437" cy="256.464844" r="81.4648437"></circle>
-      <circle id="Oval" fill="#FFFFFF" cx="239.587891" cy="313.587891" r="70.5878906"></circle>
-      <circle id="Oval" fill="#FFFFFF" cx="366.597656" cy="562.597656" r="56.5976562"></circle>
-      <circle id="Oval" fill="#FFFFFF" cx="93.203125" cy="486.203125" r="76.203125"></circle>
-    </mask>
-  </defs>
-  <image mask="url(#my-svg-mask2)" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/images/css/masking/masking-example1.jpg" width="400" height="600"></image>
-</svg>
-```
-
-## 参考资料
-
-* [1]. <https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-image>
-* [2]. <https://css-tricks.com/almanac/properties/m/mask-image/>
-* [3]. <https://www.digitalocean.com/community/tutorials/css-masking-with-mask-image>
-https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/feDisplacementMap
+* [1]. [https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/feDisplacementMap](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/feDisplacementMap)
