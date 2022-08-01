@@ -1,4 +1,4 @@
-# 使用 mask-image 让静态图片动起来 💢
+# 使用纯前端技术让静态图片局部流动起来 🌊
 
 ![banner.gif](./assets/images/banner.gif)
 
@@ -6,29 +6,121 @@
 
 ## 背景
 
-如 `👆` `Banner` 图貂蝉 `猫影幻舞` 皮肤所示，如果你有玩过 `《王者荣耀》` 、 `《阴阳师》` 等手游，一定有注意到过，它的启动动画、皮肤卡片立绘等，经常看起来是一张静态的图片，但是局部有**液态流动动画**效果，如流动的水流、飘动的雾气、风、衣物等。本文使用前端开发技术，来实现类似的液化流动效果。
+如 `👆` `Banner` 图所示，如果你有玩过 `🎮` `《王者荣耀》、《阴阳师》` 等手游，一定注意到过它的启动动画、皮肤立绘卡片等场景，经常采用**静态底图加局部有液态流动动画**效果的动画，这些流动动画可能体现在缓缓流动的水流 `🌊`、迎风飘动的旗帜 `🎏`、游戏角色衣袖 `🧜‍♀️`、随着时间缓动的云、雨、雾 `⛅` 天气效果等。本文使用前端开发技术，结合 `SVG` 和  `CSS` 来实现类似的液化流动效果。
 
 ## 效果
 
-> `🎮` 在线体验：<https://dragonir.github.io/paint-heat-map/>
+先来看看实现效果，下面几个实例以及 `Banner` 图都是应用了本文内容生成的流动效果动画效果，`GIF` 图压缩比较严重，动画效果看起来不太好 `🙃`，大家不妨通过以下演示页面链接，亲自体验一下效果。
 
-下面几张图是使用本文内容生成的流动效果，gif图压缩比较严重效果不太好，大家可以打开示例链接，亲自上传图片体验效果。
+> `👁‍🗨` 在线体验：<https://dragonir.github.io/paint-heat-map/>
 
-🌅 湖面波动
+**雾气扩散** `🌀` `塞尔达传说：旷野之息`
 
 ![sample_0](./assets/images/sample_0.gif)
 
-🎨 文字液化
-
-![sample_1](./assets/images/sample_1.gif)
-
-🔥 岩浆沸腾
+**衣袖浮动** `💃` `貂蝉：猫影幻舞`
 
 ![sample_2](./assets/images/sample_2.gif)
 
-> `📌` ps：体验页面部署在Gitpage文中上传图片功能不是真正上传到服务器，而是只会加载到浏览器本地，页面不会获取任何信息，大家可以放心体验，不用担心隐私泄漏问题。
+**湖面波动** `🌅`
 
-## 原理
+![sample_1](./assets/images/sample_1.gif)
+
+**文字液化** `🎨`
+
+![sample_3](./assets/images/sample_3.gif)
+
+> `📌` ps：体验页面部署在 `Gitpage` 上传图片功能不是真正上传到服务器，而是只会加载到浏览器本地，页面不会获取任何信息，大家可以放心体验，不用担心隐私泄漏问题。
+
+## 实现
+
+页面主要由两部分构成，顶部用于加载图片，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击按钮 `🔘` **清除画布**，可以清除绘制的流动动画效果、点击按钮 `🔘` **切换图片**可以加载本地的图片。`⚠` 注意，还有一个隐形的功能，当你绘制完成时，可以点击 `🖱` 鼠标右键，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的 `CSS` 知识，就能把静态图片转化成动态图啦！
+
+![step_0](./assets/images/step_0.png)
+
+### HTML 页面结构
+
+feTurbulence
+该滤镜利用 Perlin 噪声函数创建了一个图像。它实现了人造纹理比如说云纹、大理石纹的合成。
+
+feDisplacementMap
+映射置换滤镜，该滤镜用来自图像中从in2到空间的像素值置换图像从in到空间的像素值。
+
+```html
+<main id="sketch">
+  <canvas id="canvas" data-img=""></canvas>
+  <div class="mask">
+    <div id="maskInner" class="mask-inner"></div>
+  </div>
+</main>
+<section class="button_container">
+  <button class="button">清除画布</button>
+  <button class="button"><input class="input" type="file" id="upload">上传图片</button>
+</section>
+<svg xlmns="http://www.w3.org/2000/svg" version="1.1">
+  <filter id="heat" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%">
+    <feTurbulence id="heatturb" type="fractalNoise" numOctaves="1" seed="2" />
+    <feDisplacementMap xChannelSelector="G" yChannelSelector="B" scale="22" in="SourceGraphic" />
+  </filter>
+</svg>
+```
+
+### CSS 样式
+
+```css
+main {
+  cursor: -webkit-grab;
+  cursor: grab;
+  width: 960px;
+  height: 540px;
+  flex-shrink: 0;
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
+  background-position: 100% 50%;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
+  border: 1px groove rgba(255, 255, 255, .2);
+}
+canvas {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.mask {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mask-mode: luminance;
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-backdrop-filter: hard-light;
+          backdrop-filter: hard-light;
+  -webkit-mask-image: url('../images/mask.png');
+  mask-image: url('../images/mask.png');
+}
+.mask-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/bg.jpg') 0% 0% repeat;
+  background-size: cover;
+  background-position: 100% 50%;
+  filter: url(#heat);
+  -webkit-mask-image: url('../images/mask.png');
+  mask-image: url('../images/mask.png')
+}
+```
 
 ### mask-image
 
@@ -78,40 +170,7 @@ mask-image: unset;
 
 > `⚡` 此功能某些浏览器尚在开发中，需要使用浏览器前缀以兼容不同浏览器。
 
-## 实现
-
-页面主要由两部分构成，顶部用于加载图片，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击按钮 `🔘` **清除画布**，可以清除绘制的流动动画效果、点击按钮 `🔘` **切换图片**可以加载本地的图片。`⚠` 注意，还有一个隐形的功能，当你绘制完成时，可以点击 `🖱` 鼠标右键，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的 `CSS` 知识，就能把静态图片转化成动态图啦！
-
-![step_0](./assets/images/step_0.png)
-
-### 页面
-
-feTurbulence
-该滤镜利用 Perlin 噪声函数创建了一个图像。它实现了人造纹理比如说云纹、大理石纹的合成。
-
-feDisplacementMap
-映射置换滤镜，该滤镜用来自图像中从in2到空间的像素值置换图像从in到空间的像素值。
-
-```html
-<main id="sketch">
-  <canvas id="canvas" data-img=""></canvas>
-  <div class="mask">
-    <div id="maskInner" class="mask-inner"></div>
-  </div>
-</main>
-<section class="button_container">
-  <button class="button">清除画布</button>
-  <button class="button"><input class="input" type="file" id="upload">上传图片</button>
-</section>
-<svg xlmns="http://www.w3.org/2000/svg" version="1.1">
-  <filter id="heat" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%">
-    <feTurbulence id="heatturb" type="fractalNoise" numOctaves="1" seed="2" />
-    <feDisplacementMap xChannelSelector="G" yChannelSelector="B" scale="22" in="SourceGraphic" />
-  </filter>
-</svg>
-```
-
-### 绘制
+### JavaScript 方法
 
 ```js
 var canvas = document.getElementById('canvas');
@@ -216,63 +275,6 @@ document.getElementById('upload').onchange = function () {
 
 通过修改svg的属性，实现动画效果
 
-### 样式
-
-```css
-main {
-  cursor: -webkit-grab;
-  cursor: grab;
-  width: 960px;
-  height: 540px;
-  flex-shrink: 0;
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
-  background-position: 100% 50%;
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
-  border: 1px groove rgba(255, 255, 255, .2);
-}
-canvas {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.mask {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  mask-mode: luminance;
-  -webkit-mask-size: 100% 100%;
-          mask-size: 100% 100%;
-  -webkit-backdrop-filter: hard-light;
-          backdrop-filter: hard-light;
-  -webkit-mask-image: url('../images/mask.png');
-  mask-image: url('../images/mask.png');
-}
-.mask-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('../images/bg.jpg') 0% 0% repeat;
-  background-size: cover;
-  background-position: 100% 50%;
-  filter: url(#heat);
-  -webkit-mask-image: url('../images/mask.png');
-  mask-image: url('../images/mask.png')
-}
-```
-
 在页面右键保存生成的热点图
 
 ![mask](./assets/images/mask.png)
@@ -282,9 +284,11 @@ canvas {
 ## 附录
 
 * [我的3D专栏可以点击此链接访问 👈](https://juejin.cn/column/7049923956257587213)
-* [1]. [🦊 Three.js 实现3D开放世界小游戏：阿狸的多元宇宙](https://juejin.cn/post/7081429595689320478)
-* [2]. [🔥 Three.js 火焰效果实现艾尔登法环动态logo](https://juejin.cn/post/7077726955528781832)
-* [3]. [🐼 Three.js 实现2022冬奥主题3D趣味页面，含冰墩墩](https://juejin.cn/post/7060292943608807460)
+
+* [1]. [🌐 使用Three.js实现炫酷的赛博朋克风格3D数字地球大屏](https://juejin.cn/post/7124116814937718797#comment)
+* [2]. [🦊 Three.js 实现3D开放世界小游戏：阿狸的多元宇宙](https://juejin.cn/post/7081429595689320478)
+* [3]. [🔥 Three.js 火焰效果实现艾尔登法环动态logo](https://juejin.cn/post/7077726955528781832)
+* [4]. [🐼 Three.js 实现2022冬奥主题3D趣味页面，含冰墩墩](https://juejin.cn/post/7060292943608807460)
 * `...`
 
 * [1]. [📷 前端实现很哇塞的浏览器端扫码功能](https://juejin.cn/post/7018722520345870350)
