@@ -1,4 +1,4 @@
-# 使用纯前端技术让静态图片局部流动起来 🌊
+# 使用前端技术实现静态图片局部流动效果 🌊
 
 ![banner.gif](./assets/images/banner.gif)
 
@@ -6,13 +6,13 @@
 
 ## 背景
 
-如 `👆` `Banner` 图所示，如果你有玩过 `🎮` `《王者荣耀》、《阴阳师》` 等手游，一定注意到过它的启动动画、皮肤立绘卡片等场景，经常采用**静态底图加局部有液态流动动画**效果的动画，这些流动动画可能体现在缓缓流动的水流 `🌊`、迎风飘动的旗帜 `🎏`、游戏角色衣袖 `🧜‍♀️`、随着时间缓动的云、雨、雾 `⛅` 天气效果等。本文使用前端开发技术，结合 `SVG` 和  `CSS` 来实现类似的液化流动效果。
+如果你有玩过 `🎮` `《王者荣耀》、《阴阳师》` 等手游，一定注意到过它的启动动画、皮肤立绘卡片等场景，经常采用**静态底图加局部液态流动**效果的简单动画，这些流动动画可能体现在缓缓流动的水流 `🌊`、迎风飘动的旗帜 `🎏`、游戏角色衣袖 `🧜‍♀️`、随着时间缓动的云、雨、雾 `⛅` 天气效果等。这种过渡效果不仅节省了开发全量动画的成本，而且使得游戏画面更加热血、冒险、史诗、奥德赛、高级，也更加容易吸引玩家氪金 `💰`
 
-本文包含的知识点主要包括：
+本文使用前端开发技术，结合 `SVG` 和  `CSS` 来实现类似的液化流动效果。本文包含的知识点主要包括：`mask-image` 球体坐标系的应用、`feTurbulence 和 feDisplacementMap`、`filter` 属性、`canvas` 绘制方法、`TimelineMax` 动画、`input[type=file]` 本地图片资源加载等。
 
 ## 效果
 
-先来看看实现效果，下面几个实例以及 `Banner` 图都是应用了本文内容生成的流动效果动画效果，`GIF` 图压缩比较严重，动画效果看起来不太好 `🙃`，大家不妨通过以下演示页面链接，亲自体验一下效果。
+先来看看实现效果，下面几个实例以及 `Banner` 图都是应用了本文内容生成的流动效果动画效果，`GIF` 图压缩比较严重，动画效果看起来不太好 `🙃`，大家不妨通过以下演示页面链接，亲自体验一下丝滑效果。
 
 > `👁‍🗨` 在线体验：<https://dragonir.github.io/paint-heat-map/>
 
@@ -20,13 +20,13 @@
 
 ![sample_0](./assets/images/sample_0.gif)
 
-**衣袖浮动** `💃` `貂蝉：猫影幻舞`
-
-![sample_2](./assets/images/sample_2.gif)
-
-**湖面波动** `🌅`
+**衣袖飘动** `💃` `貂蝉：猫影幻舞`
 
 ![sample_1](./assets/images/sample_1.gif)
+
+**湖光波动** `🌅`
+
+![sample_2](./assets/images/sample_2.gif)
 
 **文字液化** `🎨`
 
@@ -36,9 +36,11 @@
 
 ## 实现
 
-页面主要由两部分构成，顶部用于加载图片，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击按钮 `🔘` **清除画布**，可以清除绘制的流动动画效果、点击按钮 `🔘` **切换图片**可以加载本地的图片。`💡` 注意，还有一个隐形的功能，当你绘制完成时，可以点击 `🖱` **鼠标右键**，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的 `CSS` 知识，就能把静态图片转化成动态图啦！
+页面主要由 `2` 部分构成，顶部用于加载图片 ，并且可以通过按住鼠标绘制的方式给图片添加流动效果；底部是控制区域，点击按钮 `🔘` **清除画布**，可以清除绘制的流动动画效果、点击按钮 `🔘` **切换图片**可以加载本地的图片。
 
 ![step_0](./assets/images/step_0.png)
+
+> `📌` 注意，还有一个隐形的功能，当你绘制完成时，可以点击 `🖱` **鼠标右键**，然后选择保存图片，保存的这张图片就是我们绘制流体动画路径的热点图，利用这张热点图，使用本文的 `CSS` 知识，就能把静态图片转化成动态图啦！
 
 ### HTML 页面结构
 
@@ -124,12 +126,6 @@ canvas {
 
 `mask-image` `CSS` 属性用于设置元素上遮罩层的图像。
 
-* 初始值：`none`
-* 适用元素：所有元素，在 `SVG` 中它生效于除了 `defs` 元素和所有图形元素以外的所有容器元素
-* 是否是继承属性：否
-* 计算值：按照指定，但 `url` 值设为绝对值
-* 动画类型：离散型
-
 **语法**：
 
 ```css
@@ -157,6 +153,8 @@ mask-image: unset;
 ### JavaScript 方法
 
 #### ① 绘制热点图
+
+监听鼠标移动和点击事件，在 `canvas` 上绘制波动路径热点。
 
 ```js
 var canvas = document.getElementById('canvas');
@@ -202,26 +200,23 @@ var onPaint = () => {
 };
 ```
 
-在页面右键保存生成的热点图，直接将绘制满意的热点图放到CSS中，就能永久生成该动画效果了。
+绘制完成后，可以在页面中**右键**保存生成的波动路径热点图，直接将绘制满意的热点图放到 `CSS` 中，就能给喜欢的图片添加局部波动效果了。
 
 ![mask](./assets/images/mask.png)
 
 #### ② 生成动画
 
-TweenMax.min.js
-
-通过修改svg的属性，实现动画效果
+为了生成实时更新的波动效果，本文使用了 `TweenMax` 来通过改变 `feTurbulence` 的 `baseFrequency` 属性值来实现，使用其他动画库或使用 `requestAnimationFrame` 也是可以实现相同的功能的。
 
 ```js
+feTurb = document.querySelector('#heatturb');
 var timeline = new TimelineMax({
   repeat: -1,
   yoyo: true
 }),
-feTurb = document.querySelector('#heatturb');
-
 timeline.add(
   new TweenMax.to(feTurb, 8, {
-    onUpdate: function () {
+    onUpdate: () => {
       var bfX = this.progress() * 0.01 + 0.025,
         bfY = this.progress() * 0.003 + 0.01,
         bfStr = bfX.toString() + ' ' + bfY.toString();
@@ -232,6 +227,8 @@ timeline.add(
 ```
 
 #### ③ 清除画布
+
+点击清除画布按钮，可以清空已经绘制的波动路径，主要是通过清除页面元素 `mask-image` 的属性值以及清 `canvas` 画布来实现的。
 
 ```js
 function clear() {
@@ -254,6 +251,8 @@ document.querySelectorAll('.button').forEach(item => {
 
 #### ④ 切换图片
 
+点击切换图片，可以加载本地的一张图片作为绘制底图，该功能是通过 `input[type=file]` 来实现图片资源的获取，然后通过修改 `CSS` 将它设置成新的画布背景。
+
 ```js
 document.getElementById('upload').onchange = function () {
   var imageFile = this.files[0];
@@ -272,7 +271,11 @@ document.getElementById('upload').onchange = function () {
 };
 ```
 
+到这里，全部功能都实现完毕了。
+
 ![banner.gif](./assets/images/banner.gif)
+
+> `📥` 源码地址：[https://github.com/dragonir/paint-heat-map](https://github.com/dragonir/paint-heat-map)
 
 ## 总结
 
@@ -283,6 +286,7 @@ document.getElementById('upload').onchange = function () {
 * `filter` 属性
 * `canvas` 绘制方法
 * `TimelineMax` 动画
+* `input[type=file]` 本地图片资源加载
 
 > 想了解其他前端知识或其他未在本文中详细描述的 `Web 3D` 开发技术相关知识，可阅读我往期的文章。**转载请注明原文地址和作者**。如果觉得文章对你有帮助，不要忘了**一键三连哦 👍**。
 
