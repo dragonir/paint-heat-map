@@ -90,6 +90,7 @@ canvas {
   -webkit-backdrop-filter: hard-light;
           backdrop-filter: hard-light;
   -webkit-mask-image: url('../images/mask.png');
+  -moz-mask-image: url('../images/mask.png');
   mask-image: url('../images/mask.png');
 }
 
@@ -104,6 +105,7 @@ canvas {
   background-position: 100% 50%;
   filter: url(#heat);
   -webkit-mask-image: url('../images/mask.png');
+  -moz-mask-image: url('../images/mask.png');
   mask-image: url('../images/mask.png')
 }
 
